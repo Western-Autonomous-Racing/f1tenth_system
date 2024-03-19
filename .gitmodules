@@ -10,3 +10,7 @@
 	path = teleop_tools
 	url = https://github.com/f1tenth/teleop_tools.git
 	branch = foxy-devel
+[submodule "camera-imu"]
+	path = camera-imu
+	url = https://github.com/Western-Autonomous-Racing/camera-imu.git
+	branch = main
