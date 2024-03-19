@@ -126,6 +126,11 @@ def generate_launch_description():
         name='static_baselink_to_laser',
         arguments=['0.27', '0.0', '0.11', '0.0', '0.0', '0.0', 'base_link', 'laser']
     )
+    camera_imu_node = Node(
+        package='camera-imu',
+        executable='CameraIMUNode',
+        name='CameraIMUNode'
+    )
 
     # finalize
     ld.add_action(joy_node)
@@ -137,5 +142,6 @@ def generate_launch_description():
     # ld.add_action(urg_node)
     ld.add_action(ackermann_mux_node)
     ld.add_action(static_tf_node)
+    ld.add_action(camera_imu_node)
 
     return ld
