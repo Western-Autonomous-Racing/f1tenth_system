@@ -51,6 +51,11 @@ def generate_launch_description():
         'config',
         'mux.yaml'
     )
+    cam_config = os.path.join(
+        get_package_share_directory('f1tenth_stack'),
+        'config',
+        'camera.yaml'
+    )
 
     joy_la = DeclareLaunchArgument(
         'joy_config',
@@ -68,8 +73,13 @@ def generate_launch_description():
         'mux_config',
         default_value=mux_config,
         description='Descriptions for ackermann mux configs')
+    cam_la = DeclareLaunchArgument(
+        'cam_config',
+        default_value=cam_config,
+        description='Descriptions for cameras configs'
+    )
 
-    ld = LaunchDescription([joy_la, vesc_la, sensors_la, mux_la])
+    ld = LaunchDescription([joy_la, vesc_la, sensors_la, mux_la, cam_la])
 
     joy_node = Node(
         package='joy',
@@ -107,12 +117,6 @@ def generate_launch_description():
         name='throttle_interpolator',
         parameters=[LaunchConfiguration('vesc_config')]
     )
-    # urg_node = Node(
-    #     package='urg_node',
-    #     executable='urg_node_driros2 run ver',
-    #     name='urg_node',
-    #     parameters=[LaunchConfiguration('sensors_config')]
-    # )
     ackermann_mux_node = Node(
         package='ackermann_mux',
         executable='ackermann_mux',
@@ -129,7 +133,8 @@ def generate_launch_description():
     camera_imu_node = Node(
         package='camera-imu',
         executable='CameraIMUNode',
-        name='CameraIMUNode'
+        name='CameraIMUNode',
+        parameters=[LaunchConfiguration('cam_config')]
     )
 
     # finalize
@@ -139,7 +144,6 @@ def generate_launch_description():
     ld.add_action(vesc_to_odom_node)
     ld.add_action(vesc_driver_node)
     # ld.add_action(throttle_interpolator_node)
-    # ld.add_action(urg_node)
     ld.add_action(ackermann_mux_node)
     ld.add_action(static_tf_node)
     ld.add_action(camera_imu_node)

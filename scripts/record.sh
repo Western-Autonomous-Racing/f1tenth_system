@@ -15,7 +15,7 @@ fi
 # of session is empty provide default topics
 if [ -z "$topics" ]
 then
-  topics="/rgb_camera/color/image_raw /stereo_camera/left/image_raw /stereo_camera/right/image_raw /imu"
+  topics="/stereo_camera/left/image_raw /stereo_camera/right/image_raw /imu" # /rgb_camera/color/image_raw"
 fi
 
 splitsize=10000000000
@@ -29,9 +29,6 @@ if [ ! -d "$recording_path" ]; then
 fi
 echo "Recording to $recording_path"
 
-# cd ~/cameraimu_ws
-# source install/setup.bash
-# ros2 run camera-imu CameraIMUNode &
 cd ~/f1tenth_ws
 source install/setup.bash
 ros2 launch f1tenth_stack bringup_launch.py &
